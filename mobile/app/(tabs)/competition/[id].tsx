@@ -79,7 +79,6 @@ export default function CompetitionDetailsScreen() {
               idOrSlug={idOrSlug}
               competition={data.competition}
               view={data.view}
-              isSubmitting={false}
             />
           </View>
         </View>

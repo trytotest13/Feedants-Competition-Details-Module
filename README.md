@@ -14,7 +14,7 @@ Assignment PDF: [`docs/assignment/`](docs/assignment)
 | Backend | Node.js · Express 4 · TypeScript strict · Zod · JWT (jsonwebtoken) · bcryptjs · multer · helmet |
 | Database | MongoDB (Mongoose 8) — Atlas / local / Docker, **or zero-setup in-memory fallback in dev** |
 | Payments | `PAYMENT_MODE=mock` (auto-confirm, Expo Go friendly) or Razorpay order + signature-verified webhook |
-| Tests | Vitest + supertest + mongodb-memory-server — **18 integration tests incl. a parallel-booking race test** |
+| Tests | Vitest + supertest + mongodb-memory-server — **21 integration tests incl. a parallel-booking race test** |
 
 ---
 

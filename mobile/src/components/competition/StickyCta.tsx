@@ -14,7 +14,6 @@ interface Props {
   idOrSlug: string;
   competition: Competition;
   view: CompetitionView;
-  isSubmitting: boolean;
 }
 
 /**
@@ -25,7 +24,7 @@ interface Props {
  *  - full / upcoming / judging / completed → state-appropriate disabled CTA
  * A "Cancel registration" text action appears while cancellation is allowed.
  */
-export function StickyCta({ idOrSlug, competition, view, isSubmitting }: Props) {
+export function StickyCta({ idOrSlug, competition, view }: Props) {
   const { t } = useLocale();
   const { register, cancel } = useRegistrationActions(idOrSlug);
   const qc = useQueryClient();
@@ -136,7 +135,7 @@ export function StickyCta({ idOrSlug, competition, view, isSubmitting }: Props) 
         label={cta.label}
         subtitle={cta.subtitle}
         disabled={cta.disabled}
-        loading={register.isPending || uploading || isSubmitting}
+        loading={register.isPending || uploading}
         onPress={cta.onPress}
       />
     </View>

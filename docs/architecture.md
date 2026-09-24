@@ -31,7 +31,7 @@
 │   │   ├── services/           # business logic: competitionState, registrationService, referralService
 │   │   ├── middleware/         # auth, validate(zod), error, notFound, rateLimit, httpsRedirect
 │   │   ├── validators/         # zod schemas per resource
-│   │   ├── utils/              # ApiError, asyncHandler, jwt, pagination
+│   │   ├── utils/              # ApiError, asyncHandler, jwt
 │   │   ├── seed/seed.ts        # realistic seed matching the reference design
 │   │   ├── app.ts / server.ts
 │   │   └── tests/              # vitest integration tests (incl. concurrency race)

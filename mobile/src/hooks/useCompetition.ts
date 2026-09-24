@@ -18,13 +18,6 @@ export function useCompetition(idOrSlug: string) {
   });
 }
 
-export function useMySubmission(idOrSlug: string, enabled: boolean) {
-  return useQuery({
-    queryKey: ['submission', idOrSlug],
-    queryFn: () => competitionApi.mySubmission(idOrSlug),
-    enabled,
-  });
-}
 
 const ERROR_KEY_MAP: Record<string, StringKey> = {
   COMPETITION_FULL: 'allSpotsFilled',

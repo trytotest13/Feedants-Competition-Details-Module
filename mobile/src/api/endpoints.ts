@@ -50,8 +50,6 @@ export const competitionApi = {
     api<{ view: CompetitionDetail['view'] }>(`/competitions/${idOrSlug}/registration`, {
       method: 'DELETE',
     }),
-  mySubmission: (idOrSlug: string) =>
-    api<{ submission: SubmissionT | null }>(`/competitions/${idOrSlug}/submission`),
   uploadSubmission: (idOrSlug: string, form: FormData) =>
     apiUpload<{ submission: SubmissionT }>(`/competitions/${idOrSlug}/submission`, form),
 };
