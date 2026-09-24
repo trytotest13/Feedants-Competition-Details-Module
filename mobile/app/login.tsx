@@ -171,22 +171,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logoText: {
-    color: colors.white,
+    color: colors.onDark,
     fontFamily: fontFamily.bold,
     fontSize: 20,
   },
   brand: {
-    color: colors.white,
+    color: colors.onDark,
     fontFamily: fontFamily.bold,
     fontSize: 20,
   },
   heading: {
-    color: colors.white,
+    color: colors.onDark,
     fontFamily: fontFamily.bold,
     fontSize: 24,
   },
   sub: {
-    color: colors.mint,
+    color: colors.onDarkSoft,
     fontFamily: fontFamily.regular,
     fontSize: fontSize.body,
     marginBottom: 16,
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize.body,
   },
   error: {
-    color: '#FF8A8A',
+    color: colors.onDarkDanger,
     fontFamily: fontFamily.medium,
     fontSize: fontSize.caption,
   },
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
   },
   ctaText: {
-    color: colors.white,
+    color: colors.onDark,
     fontFamily: fontFamily.semibold,
     fontSize: fontSize.bodyStrong,
   },

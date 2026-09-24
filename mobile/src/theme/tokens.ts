@@ -32,6 +32,10 @@ export const colors = {
   emeraldTint: '#E2F8EC', // submission-open badge wash
   slateTint: '#EEF2F5', // completed/judging badge wash
   coralTint: '#FFECEC', // sold-out badge wash
+  // ── on-dark text (for ink surfaces), modeled on Expo's DESIGN.md convention ──
+  onDark: '#FFFFFF', // primary text on ink
+  onDarkSoft: '#CFE3DE', // secondary text on ink (mint-tinted)
+  onDarkDanger: '#FF8A8A', // error text on ink
 } as const;
 
 /** Gradient pair for primary CTAs — use with expo-linear-gradient. */

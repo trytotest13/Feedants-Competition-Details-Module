@@ -122,12 +122,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   name: {
-    color: colors.white,
+    color: colors.onDark,
     fontFamily: fontFamily.bold,
     fontSize: fontSize.bodyStrong,
   },
   email: {
-    color: colors.mint,
+    color: colors.onDarkSoft,
     fontFamily: fontFamily.regular,
     fontSize: fontSize.caption,
   },

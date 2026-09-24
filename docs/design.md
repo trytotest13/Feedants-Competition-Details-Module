@@ -32,6 +32,10 @@ Reference: [`assignment/Objective_Page.png`](./assignment/Objective_Page.png). L
 - **One hot signal color (tangerine)** reserved exclusively for urgency ("Hurry up!", remaining spots) — if everything is hot, nothing is.
 - **Lifecycle badges are colored by meaning**: registration_open = filled gradient teal/white; submission_open = emerald tint; judging = tangerine tint; registration_full = coral tint; completed/awaiting = slate tint; upcoming = outline.
 
+**On-dark convention** (modeled on Expo's DESIGN.md in the awesome-design skill library): text on `ink` surfaces uses semantic `onDark` / `onDarkSoft` / `onDarkDanger` tokens — never raw `white`/`mint` — so dark surfaces can shift without touching components.
+
+**Skills consulted for this design/docs framework:** frontend-design (distinctive direction, restraint, two-pass critique) · karpathy-coding-guidelines (smallest correct change, verify everything) · awesome-design library (real-world token conventions — Expo on-dark naming, semantic color structure) · gstack execution loop (orient → understand → plan → execute → verify → inspect diff → report; evidence hierarchy; never fabricate results) · skill-development + lightswind-ui (evaluated; Lightswind is a React+Tailwind web library and intentionally **not** used in this React Native/Expo project).
+
 ## 2. Typography scale (Poppins)
 
 | Style | Size/line | Weight | Usage |
