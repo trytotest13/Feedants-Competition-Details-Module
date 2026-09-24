@@ -9,6 +9,8 @@ Legend: `[ ]` Todo · `[/]` In Progress · `[x]` Done — updated automatically 
 - (none)
 
 ## Done
+- [x] P6.1 Button test sweep: all 24 interactive elements verified in browser
+- [x] P6.2 Fixes: web no-op Alert → cross-platform dialogs; Share fallback; PlayCircle press bug; deep-link back; no-op CTAs
 - [x] P5.1 Explore screen: server-side search (`?q=`, `?category=`) with debounced UI + category chips
 - [x] P5.2 Search tests (title/category/tag matching, escaping) — 21/21 green
 - [x] P5.3 Contrast design system (ink surfaces, gradient CTAs, tangerine signal)

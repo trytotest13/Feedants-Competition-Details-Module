@@ -1,9 +1,10 @@
 import React from 'react';
-import { Linking, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Card, PlayCircle } from '../common/ui';
 import { Avatar } from '../common/Avatar';
 import { colors, fontFamily, fontSize } from '../../theme/tokens';
 import { useLocale } from '../../i18n/strings';
+import { openExternal } from '../../utils/feedback';
 import { Judge } from '../../api/types';
 
 /** Judge card with intro-video play button (opens the video URL). */
@@ -11,7 +12,7 @@ export function JudgeCard({ judge }: { judge: Judge }) {
   const { t } = useLocale();
 
   const openIntro = () => {
-    if (judge.introVideoUrl) void Linking.openURL(judge.introVideoUrl);
+    void openExternal(judge.introVideoUrl);
   };
 
   return (

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { FlatList, Image, Linking, Pressable, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { EmptyState, SectionTitle } from '../common/ui';
 import { colors, fontFamily, fontSize, radius } from '../../theme/tokens';
 import { ordinal } from '../../utils/format';
 import { useLocale } from '../../i18n/strings';
+import { openExternal } from '../../utils/feedback';
 import { Winner } from '../../api/types';
 
 /** Horizontal strip of previous-edition winners with video links. */
@@ -30,7 +31,7 @@ export function WinnersStrip({ winners }: { winners: Winner[] }) {
           renderItem={({ item }) => (
             <View style={styles.card}>
               <Pressable
-                onPress={() => item.videoUrl && void Linking.openURL(item.videoUrl)}
+                onPress={() => item.videoUrl && void openExternal(item.videoUrl)}
                 accessibilityRole={item.videoUrl ? 'button' : undefined}
                 accessibilityLabel={`${item.name} performance video`}
               >

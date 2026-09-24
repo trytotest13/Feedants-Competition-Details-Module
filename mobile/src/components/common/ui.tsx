@@ -62,6 +62,8 @@ export function ProgressBar({ percent }: { percent: number }) {
 }
 
 // ── Play circle (mint disc + teal triangle) ─────────────────────────────
+// NOTE: children-as-function breaks press handling on react-native-web —
+// keep static children and express the pressed state via the style function.
 export function PlayCircle({ size = 44, onPress }: { size?: number; onPress?: () => void }) {
   const content = (
     <View style={[styles.play, { width: size, height: size, borderRadius: size / 2 }]}>
@@ -70,8 +72,13 @@ export function PlayCircle({ size = 44, onPress }: { size?: number; onPress?: ()
   );
   if (!onPress) return content;
   return (
-    <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel="Play video">
-      {({ pressed }) => <View style={{ opacity: pressed ? 0.7 : 1 }}>{content}</View>}
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel="Play video"
+      style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
+    >
+      {content}
     </Pressable>
   );
 }

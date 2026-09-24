@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import { formatShortDate } from '../../utils/format';
 import { useLocale } from '../../i18n/strings';
@@ -9,6 +9,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Competition, CompetitionView } from '../../api/types';
 import { PrimaryButton } from '../common/ui';
 import { colors, fontFamily, fontSize } from '../../theme/tokens';
+import { confirmAsync, showAlert } from '../../utils/feedback';
 
 interface Props {
   idOrSlug: string;
@@ -37,14 +38,14 @@ export function StickyCta({ idOrSlug, competition, view }: Props) {
     const end = new Date(competition.schedule.submissionEndAt).getTime();
 
     if (now < start) {
-      Alert.alert(
+      showAlert(
         t.uploadSubmission,
         `Submissions open on ${formatShortDate(competition.schedule.submissionStartAt)} at your pace — you'll be able to upload until ${formatShortDate(competition.schedule.submissionEndAt)}.`,
       );
       return;
     }
     if (now > end) {
-      Alert.alert(t.uploadSubmission, 'The submission window has closed.');
+      showAlert(t.uploadSubmission, 'The submission window has closed.');
       return;
     }
 
@@ -69,9 +70,9 @@ export function StickyCta({ idOrSlug, competition, view }: Props) {
       await competitionApi.uploadSubmission(idOrSlug, form);
       setHasSubmitted(true);
       void qc.invalidateQueries({ queryKey: ['submission', idOrSlug] });
-      Alert.alert(t.submitted, 'Your entry was submitted successfully. Good luck!');
+      showAlert(t.submitted, 'Your entry was submitted successfully. Good luck!');
     } catch (err) {
-      Alert.alert('Upload failed', err instanceof Error ? err.message : 'Please try again.');
+      showAlert('Upload failed', err instanceof Error ? err.message : 'Please try again.');
     } finally {
       setUploading(false);
     }
@@ -103,7 +104,14 @@ export function StickyCta({ idOrSlug, competition, view }: Props) {
   } else if (view.state === 'judging') {
     cta = { label: t.judgingInProgress, disabled: true, onPress: () => {} };
   } else if (view.state === 'completed') {
-    cta = { label: t.viewResults, onPress: () => {} };
+    cta = {
+      label: t.viewResults,
+      onPress: () =>
+        showAlert(
+          t.viewResults,
+          `Results were declared on ${formatShortDate(competition.schedule.resultAt)}. See the Rewards section for the prize distribution.`,
+        ),
+    };
   } else {
     // registration closed but submission window hasn't opened (awaiting_submission)
     cta = {
@@ -119,10 +127,9 @@ export function StickyCta({ idOrSlug, competition, view }: Props) {
       {view.flags.canCancel ? (
         <Pressable
           onPress={() =>
-            Alert.alert(t.cancelRegistration, 'Are you sure? Your spot will be released.', [
-              { text: 'No', style: 'cancel' },
-              { text: 'Yes, cancel', style: 'destructive', onPress: () => cancel.mutate() },
-            ])
+            confirmAsync(t.cancelRegistration, 'Are you sure? Your spot will be released.').then(
+              (ok) => ok && cancel.mutate(),
+            )
           }
           style={styles.cancelBtn}
           accessibilityRole="button"

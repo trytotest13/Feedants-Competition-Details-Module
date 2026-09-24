@@ -1,9 +1,10 @@
 import React from 'react';
-import { Alert, Linking, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Card, PlayCircle } from '../common/ui';
 import { colors, fontFamily, fontSize } from '../../theme/tokens';
 import { useLocale } from '../../i18n/strings';
+import { showAlert } from '../../utils/feedback';
 import { Competition } from '../../api/types';
 
 /** Prize-money explainer, refund policy and payment provider row. */
@@ -11,7 +12,7 @@ export function PaymentsCard({ competition }: { competition: Competition }) {
   const { t } = useLocale();
 
   const showRefundPolicy = () => {
-    Alert.alert(t.refundPolicy, competition.payments.refundPolicy);
+    showAlert(t.refundPolicy, competition.payments.refundPolicy);
   };
 
   const openPrizeVideo = () => {
@@ -24,7 +25,8 @@ export function PaymentsCard({ competition }: { competition: Competition }) {
     <Card>
       <View style={styles.row}>
         <View style={styles.prizeCol}>
-          <PlayCircle size={40} onPress={openPrizeVideo} />
+          {/* Non-clickable disc when there is no video — never a dead button */}
+          <PlayCircle size={40} onPress={competition.payments.prizeVideoUrl ? openPrizeVideo : undefined} />
           <View style={styles.prizeMeta}>
             <Text style={styles.prizeTitle}>{t.howReceivePrize}</Text>
             <Text style={styles.prizeSub}>{competition.payments.prizeInfoText || t.watchVideo}</Text>

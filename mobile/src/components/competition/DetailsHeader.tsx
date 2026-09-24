@@ -13,7 +13,10 @@ export function DetailsHeader() {
   return (
     <View style={styles.row}>
       <Pressable
-        onPress={() => router.back()}
+        onPress={() => {
+          if (router.canGoBack()) router.back();
+          else router.replace('/(tabs)');
+        }}
         style={({ pressed }) => [styles.back, { opacity: pressed ? 0.6 : 1 }]}
         accessibilityRole="button"
         accessibilityLabel="Go back"

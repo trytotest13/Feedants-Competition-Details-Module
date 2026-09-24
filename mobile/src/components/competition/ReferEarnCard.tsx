@@ -1,11 +1,12 @@
-import React from 'react';
-import { Share, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Clipboard from 'expo-clipboard';
 import { colors, fontFamily, fontSize, radius } from '../../theme/tokens';
 import { useLocale } from '../../i18n/strings';
 import { useAuth } from '../../auth/AuthContext';
 import { formatRupees } from '../../utils/format';
+import { shareOrCopy } from '../../utils/feedback';
 
 /** Refer & Earn card — copy/share the user's referral link. */
 export function ReferEarnCard({ rewardPerSignup }: { rewardPerSignup: number }) {
@@ -14,14 +15,25 @@ export function ReferEarnCard({ rewardPerSignup }: { rewardPerSignup: number }) 
 
   const link = user?.referralCode ? `https://feedants.com/r/${user.referralCode}` : '';
 
+  const [copied, setCopied] = useState(false);
+  const [shared, setShared] = useState(false);
+
   const copy = async () => {
     if (!link) return;
     await Clipboard.setStringAsync(link);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const share = async () => {
     if (!link) return;
-    await Share.share({ message: `Join me on Feedants and win exciting prizes! ${link}` });
+    const result = await shareOrCopy(
+      `Join me on Feedants and win exciting prizes! ${link}`,
+    );
+    if (result === 'copied') {
+      setShared(true);
+      setTimeout(() => setShared(false), 2000);
+    }
   };
 
   return (
@@ -44,7 +56,7 @@ export function ReferEarnCard({ rewardPerSignup }: { rewardPerSignup: number }) 
                 accessibilityRole="button"
                 accessibilityLabel={t.copyLink}
               >
-                {t.copyLink}
+                {copied ? 'Copied ✓' : t.copyLink}
               </Text>
             </View>
           ) : null}
@@ -59,6 +71,7 @@ export function ReferEarnCard({ rewardPerSignup }: { rewardPerSignup: number }) 
           >
             {t.referNow}
           </Text>
+          {shared ? <Text style={styles.sharedNote}>Link copied to clipboard</Text> : null}
           <Text style={styles.earnText}>
             {t.youEarn} <Text style={styles.earnAmount}>{formatRupees(rewardPerSignup)}</Text>{' '}
             {t.forEverySignup}
@@ -153,6 +166,11 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.regular,
     fontSize: 11,
     textAlign: 'center',
+  },
+  sharedNote: {
+    color: colors.primary,
+    fontFamily: fontFamily.semibold,
+    fontSize: 11,
   },
   earnAmount: {
     color: colors.navy,

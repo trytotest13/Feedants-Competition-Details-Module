@@ -1,8 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Alert } from 'react-native';
+
 import { competitionApi } from '../api/endpoints';
 import { ApiClientError } from '../api/client';
 import { useLocale, StringKey } from '../i18n/strings';
+import { showAlert } from '../utils/feedback';
 
 export function useCompetitions() {
   return useQuery({
@@ -38,14 +39,14 @@ export function useRegistrationActions(idOrSlug: string) {
     onSuccess: invalidate,
     onError: (err) => {
       const key = err instanceof ApiClientError ? ERROR_KEY_MAP[err.code] : undefined;
-      Alert.alert(key ? t[key] : err.message);
+      showAlert(key ? t[key] : err.message);
     },
   });
 
   const cancel = useMutation({
     mutationFn: () => competitionApi.cancelRegistration(idOrSlug),
     onSuccess: invalidate,
-    onError: (err) => Alert.alert(err.message),
+    onError: (err) => showAlert(err.message),
   });
 
   return { register, cancel };
