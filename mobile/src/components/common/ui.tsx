@@ -8,7 +8,8 @@ import {
   ViewStyle,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, fontFamily, fontSize, radius } from '../../theme/tokens';
+import { LinearGradient } from 'expo-linear-gradient';
+import { colors, ctaGradient, fontFamily, fontSize, radius } from '../../theme/tokens';
 
 // ── Card ────────────────────────────────────────────────────────────────
 export function Card({
@@ -46,11 +47,16 @@ export function SectionTitle({ children, suffix }: { children: string; suffix?: 
   );
 }
 
-// ── Progress bar ────────────────────────────────────────────────────────
+// ── Progress bar (gradient fill) ────────────────────────────────────────
 export function ProgressBar({ percent }: { percent: number }) {
   return (
     <View style={styles.track}>
-      <View style={[styles.fill, { width: `${Math.max(percent, 4)}%` }]} />
+      <LinearGradient
+        colors={[...ctaGradient]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={[styles.fill, { width: `${Math.max(percent, 4)}%` }]}
+      />
     </View>
   );
 }
@@ -117,7 +123,7 @@ export function EmptyState({ message, icon = 'sparkles-outline' }: { message: st
   );
 }
 
-// ── Primary button ──────────────────────────────────────────────────────
+// ── Primary button (teal→green gradient, soft glow) ────────────────────
 export function PrimaryButton({
   label,
   subtitle,
@@ -131,26 +137,39 @@ export function PrimaryButton({
   disabled?: boolean;
   loading?: boolean;
 }) {
+  const content = loading ? (
+    <ActivityIndicator color={colors.white} />
+  ) : (
+    <>
+      <Text style={styles.primaryLabel}>{label}</Text>
+      {subtitle ? <Text style={styles.primarySubtitle}>{subtitle}</Text> : null}
+    </>
+  );
+
+  if (disabled && !loading) {
+    return (
+      <View style={[styles.primaryBtn, styles.primaryBtnDisabled]}>
+        {content}
+      </View>
+    );
+  }
+
   return (
     <Pressable
       onPress={onPress}
-      disabled={disabled || loading}
+      disabled={loading}
       accessibilityRole="button"
       accessibilityState={{ disabled: !!disabled }}
-      style={({ pressed }) => [
-        styles.primaryBtn,
-        (disabled || loading) && styles.primaryBtnDisabled,
-        pressed && !disabled && { backgroundColor: colors.primaryStrong },
-      ]}
+      style={({ pressed }) => [styles.primaryGlow, pressed && { opacity: 0.85 }]}
     >
-      {loading ? (
-        <ActivityIndicator color={colors.white} />
-      ) : (
-        <>
-          <Text style={styles.primaryLabel}>{label}</Text>
-          {subtitle ? <Text style={styles.primarySubtitle}>{subtitle}</Text> : null}
-        </>
-      )}
+      <LinearGradient
+        colors={[...ctaGradient]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.primaryBtn}
+      >
+        {content}
+      </LinearGradient>
     </Pressable>
   );
 }
@@ -250,15 +269,23 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   primaryBtn: {
-    backgroundColor: colors.primary,
     borderRadius: radius.button,
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 12,
     minHeight: 52,
   },
+  primaryGlow: {
+    borderRadius: radius.button,
+    shadowColor: colors.gradStart,
+    shadowOpacity: 0.35,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 5,
+  },
   primaryBtnDisabled: {
-    opacity: 0.45,
+    backgroundColor: '#C4D3D8',
+    opacity: 1,
   },
   primaryLabel: {
     color: colors.white,

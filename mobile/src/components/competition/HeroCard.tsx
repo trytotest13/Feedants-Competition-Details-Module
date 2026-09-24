@@ -47,7 +47,7 @@ export function HeroCard({ competition, view }: { competition: Competition; view
         </View>
         <View style={styles.spots}>
           <View style={styles.spotsLabelRow}>
-            <Ionicons name="people-outline" size={14} color={colors.accent} />
+            <Ionicons name="people-outline" size={14} color={colors.tangerine} />
             <Text style={styles.spotsText}>
               {view.state === 'registration_full'
                 ? t.allSpotsFilled
@@ -148,8 +148,8 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   spotsText: {
-    color: colors.accent,
-    fontFamily: fontFamily.medium,
+    color: colors.tangerine,
+    fontFamily: fontFamily.bold,
     fontSize: fontSize.chip,
   },
   bookedCaption: {

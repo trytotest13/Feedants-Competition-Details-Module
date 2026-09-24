@@ -1,6 +1,8 @@
 /**
  * Design tokens — single source of truth (docs/design.md).
- * Never hardcode colors/spacing outside this file.
+ * Contrast system learned from Dribbble developer-skills refs:
+ * dark ink surfaces + teal→green gradient CTAs + tangerine urgency signal,
+ * on top of the Feedants teal brand (reference design).
  */
 export const colors = {
   primary: '#0E7C74',
@@ -20,7 +22,20 @@ export const colors = {
   danger: '#DC2626',
   track: '#DDE7EA',
   white: '#FFFFFF',
+  // ── contrast additions ──
+  ink: '#0C2233', // near-black navy — dark contrast surfaces (login, user card, digits)
+  inkSoft: '#16324A', // raised dark surface
+  gradStart: '#0E9384', // gradient CTA start (teal)
+  gradEnd: '#2FBF8F', // gradient CTA end (fresh green)
+  tangerine: '#FF7A29', // hot urgency accent (hurry up, spots left)
+  tangerineTint: '#FFF1E6', // tangerine wash for badges
+  emeraldTint: '#E2F8EC', // submission-open badge wash
+  slateTint: '#EEF2F5', // completed/judging badge wash
+  coralTint: '#FFECEC', // sold-out badge wash
 } as const;
+
+/** Gradient pair for primary CTAs — use with expo-linear-gradient. */
+export const ctaGradient = [colors.gradStart, colors.gradEnd] as const;
 
 export const spacing = {
   xs: 4,

@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   referBtn: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.ink,
     color: colors.white,
     fontFamily: fontFamily.semibold,
     fontSize: fontSize.chip,

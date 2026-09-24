@@ -2,12 +2,13 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Tabs, Redirect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '../../src/auth/AuthContext';
 import { Avatar } from '../../src/components/common/Avatar';
 import { useLocale } from '../../src/i18n/strings';
-import { colors, fontFamily, radius } from '../../src/theme/tokens';
+import { colors, ctaGradient, fontFamily, radius } from '../../src/theme/tokens';
 
 /**
  * Bottom tab bar matching the reference design:
@@ -65,9 +66,14 @@ function TabBar({ state, navigation }: BottomTabBarProps) {
         accessibilityLabel="Create"
         style={styles.plusWrap}
       >
-        <View style={styles.plus}>
+        <LinearGradient
+          colors={[...ctaGradient]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.plus}
+        >
           <Ionicons name="add" size={24} color={colors.white} />
-        </View>
+        </LinearGradient>
       </Pressable>
 
       {after.map(renderItem)}
@@ -130,9 +136,13 @@ const styles = StyleSheet.create({
     width: 48,
     height: 44,
     borderRadius: radius.button,
-    backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: colors.gradStart,
+    shadowOpacity: 0.4,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 5 },
+    elevation: 5,
   },
   avatarWrap: {
     width: 22,

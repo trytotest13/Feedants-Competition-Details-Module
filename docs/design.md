@@ -1,14 +1,18 @@
 # Design — UI/UX & Design Tokens
 
-Reference: [`assignment/Objective_Page.png`](./assignment/Objective_Page.png). Light theme, card-based, teal brand on white. Typeface **Poppins** (600/700 headings, 400/500 body) — matches the reference's geometric sans.
+Reference: [`assignment/Objective_Page.png`](./assignment/Objective_Page.png). Light theme, card-based, teal brand on white — extended with a **contrast system** learned from Dribbble developer-skills references: dark ink surfaces, teal→green gradient CTAs, and a hot tangerine urgency signal. Typeface **Poppins** (600/700 headings, 400/500 body).
 
 ## 1. Color palette
 
 | Token | Hex | Tailwind equivalent | Usage |
 |---|---|---|---|
-| `primary` | `#0E7C74` | teal-700 (adjusted) | Primary buttons (Upload Submission, Refer Now), active tab, ENG pill |
-| `primaryStrong` | `#0B655E` | — | Button pressed state |
-| `accent` | `#0D9488` | teal-600 | Countdown digits, links, position labels, icons |
+| `primary` | `#0E7C74` | teal-700 (adjusted) | Brand moments, active tab, ENG pill |
+| `primaryStrong` | `#0B655E` | — | Pressed state |
+| `accent` | `#0D9488` | teal-600 | Links, position labels, icons |
+| `gradStart` | `#0E9384` | — | Gradient CTA start (teal) |
+| `gradEnd` | `#2FBF8F` | emerald-400 | Gradient CTA end (fresh green) |
+| `ink` | `#0C2233` | near-black navy | Dark contrast surfaces: login screen, profile user card, countdown digits/labels |
+| `tangerine` | `#FF7A29` | — | Urgency signal: "Hurry up!", "N spots left" |
 | `mint` | `#E7F4F1` | — | Banner/card backgrounds (countdown, refer, registered badge bg, play buttons) |
 | `mintBorder` | `#D3EAE5` | — | Mint card borders |
 | `navy` | `#1C3D5A` | — | Headings, prices, names, primary text |
@@ -18,10 +22,15 @@ Reference: [`assignment/Objective_Page.png`](./assignment/Objective_Page.png). L
 | `surface` | `#FFFFFF` | white | Cards |
 | `bg` | `#F7FAFB` | gray-50 | Screen background |
 | `chipBg` | `#F1F5F7` | gray-100 | Chips, pill backgrounds |
-| `amber` | `#F59E0B` | amber-500 | "Hurry up!" alarm, 1st-place trophy |
-| `silver` | `#94A3B8` | slate-400 | 2nd/3rd medals, star outlines |
+| `amber` | `#F59E0B` | amber-500 | 1st-place trophy, star ratings |
+| `silver` | `#94A3B8` | slate-400 | 2nd/3rd medals, star outlines, inactive tabs |
 | `danger` | `#DC2626` | red-600 | Destructive/error text |
-| `success` | `#0D9488` | teal-600 | Registered badge, submitted state |
+
+**Contrast rules (learned from reference boards):**
+- **CTAs carry a teal→green gradient** (`gradStart → gradEnd`, 135°) with a soft teal glow — never flat teal.
+- **Ink (#0C2233) is the counter-surface** — the login screen and profile user card invert to dark, making the gradient and mint accents pop; countdown digits/labels use ink on mint for maximum legibility.
+- **One hot signal color (tangerine)** reserved exclusively for urgency ("Hurry up!", remaining spots) — if everything is hot, nothing is.
+- **Lifecycle badges are colored by meaning**: registration_open = filled gradient teal/white; submission_open = emerald tint; judging = tangerine tint; registration_full = coral tint; completed/awaiting = slate tint; upcoming = outline.
 
 ## 2. Typography scale (Poppins)
 

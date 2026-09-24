@@ -3,10 +3,11 @@ import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useCompetitions } from '../../src/hooks/useCompetition';
 import { CompetitionSummary } from '../../src/api/endpoints';
 import { DetailsSkeleton, ErrorState } from '../../src/components/common/ui';
-import { colors, fontFamily, fontSize, radius } from '../../src/theme/tokens';
+import { colors, ctaGradient, fontFamily, fontSize, radius } from '../../src/theme/tokens';
 import { formatRupees, formatShortDate } from '../../src/utils/format';
 import { useLocale } from '../../src/i18n/strings';
 
@@ -20,9 +21,22 @@ const STATE_LABEL: Record<string, string> = {
   completed: 'Completed',
 };
 
+/** Per-state badge colors — saturated signal chips (contrast system). */
+const STATE_BADGE: Record<string, { bg: string; fg: string; filled?: boolean }> = {
+  registration_open: { bg: colors.gradStart, fg: colors.white, filled: true },
+  submission_open: { bg: colors.emeraldTint, fg: '#0B815A' },
+  judging: { bg: colors.tangerineTint, fg: '#C25E12' },
+  registration_full: { bg: colors.coralTint, fg: '#D64545' },
+  completed: { bg: colors.slateTint, fg: colors.textBody },
+  awaiting_submission: { bg: colors.slateTint, fg: colors.textBody },
+  upcoming: { bg: colors.surface, fg: colors.textMuted },
+};
+
 export function CompetitionCard({ item }: { item: CompetitionSummary }) {
-  const stateLabel = STATE_LABEL[item.view.state] ?? item.view.state;
-  const open = item.view.state === 'registration_open';
+  const state = item.view.state;
+  const stateLabel = STATE_LABEL[state] ?? state;
+  const badge = STATE_BADGE[state] ?? { bg: colors.slateTint, fg: colors.textBody };
+  const open = state === 'registration_open';
 
   return (
     <Pressable
@@ -32,13 +46,13 @@ export function CompetitionCard({ item }: { item: CompetitionSummary }) {
       accessibilityLabel={`Open ${item.title}`}
     >
       <View style={styles.cardHeader}>
-        <View style={styles.badgeWrap}>
+        <View style={[styles.badgeWrap, { backgroundColor: badge.bg }]}>
           <Ionicons
-            name={open ? 'ellipse' : 'ellipse-outline'}
+            name={badge.filled ? 'ellipse' : 'ellipse-outline'}
             size={8}
-            color={open ? colors.accent : colors.silver}
+            color={badge.filled ? colors.white : badge.fg}
           />
-          <Text style={[styles.badge, open && styles.badgeOpen]}>{stateLabel}</Text>
+          <Text style={[styles.badge, { color: badge.fg }]}>{stateLabel}</Text>
         </View>
         <Text style={styles.category}>{item.category}</Text>
       </View>
@@ -48,20 +62,44 @@ export function CompetitionCard({ item }: { item: CompetitionSummary }) {
       <View style={styles.statsRow}>
         <View>
           <Text style={styles.statLabel}>Prize Pool</Text>
-          <Text style={styles.prize}>{formatRupees(item.prizePool)}</Text>
+          {open ? (
+            <LinearGradient
+              colors={[...ctaGradient]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.prizeUnderline}
+            >
+              <Text style={[styles.prize, { color: colors.white }]}>
+                {formatRupees(item.prizePool)}
+              </Text>
+            </LinearGradient>
+          ) : (
+            <Text style={styles.prize}>{formatRupees(item.prizePool)}</Text>
+          )}
         </View>
         <View>
           <Text style={styles.statLabel}>Entry Fee</Text>
           <Text style={styles.fee}>{formatRupees(item.entryFee)}</Text>
         </View>
         <View style={styles.right}>
-          <Text style={styles.spots}>
+          <Text
+            style={[
+              styles.spots,
+              state === 'registration_full' && { color: '#D64545' },
+            ]}
+          >
             {item.view.state === 'registration_full'
               ? 'Full'
               : `${item.view.spotsLeft} spots left`}
           </Text>
           <Text style={styles.close}>
-            Closes {formatShortDate(item.schedule.registrationCloseAt)}
+            {state === 'completed'
+              ? 'Result declared'
+              : state === 'judging'
+                ? 'Judging in progress'
+                : state === 'upcoming'
+                  ? `Opens ${formatShortDate(item.schedule.registrationOpenAt)}`
+                  : `Closes ${formatShortDate(item.schedule.registrationCloseAt)}`}
           </Text>
         </View>
       </View>
@@ -162,18 +200,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 5,
-    backgroundColor: colors.mint,
     borderRadius: radius.pill,
     paddingHorizontal: 10,
     paddingVertical: 4,
   },
   badge: {
-    color: colors.textBody,
-    fontFamily: fontFamily.medium,
+    fontFamily: fontFamily.semibold,
     fontSize: 11,
   },
-  badgeOpen: {
-    color: colors.accent,
+  prizeUnderline: {
+    alignSelf: 'flex-start',
+    paddingHorizontal: 6,
+    marginHorizontal: -6,
+    borderRadius: 6,
+    paddingVertical: 1,
   },
   category: {
     color: colors.textMuted,

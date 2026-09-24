@@ -45,7 +45,7 @@ export function CountdownBanner({
 
       {urgent ? (
         <View style={styles.side}>
-          <Ionicons name="alarm-outline" size={16} color={colors.amber} />
+          <Ionicons name="alarm-outline" size={16} color={colors.tangerine} />
           <Text style={styles.hurry}>{t.hurryUp}</Text>
         </View>
       ) : (
@@ -78,21 +78,21 @@ const styles = StyleSheet.create({
     width: 52,
   },
   label: {
-    color: colors.navy,
+    color: colors.ink,
     fontFamily: fontFamily.semibold,
     fontSize: 11,
     flexShrink: 1,
   },
   digits: {
-    color: colors.primary,
+    color: colors.ink,
     fontFamily: fontFamily.bold,
     fontSize: 13,
     fontVariant: ['tabular-nums'],
     flexShrink: 0,
   },
   hurry: {
-    color: colors.amber,
-    fontFamily: fontFamily.medium,
+    color: colors.tangerine,
+    fontFamily: fontFamily.bold,
     fontSize: 11,
   },
 });

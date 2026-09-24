@@ -42,6 +42,10 @@ export default function ProfileScreen() {
           <Text style={styles.name}>{user.name}</Text>
           <Text style={styles.email}>{user.email}</Text>
         </View>
+        <View style={styles.earnChip}>
+          <Text style={styles.earnChipText}>{formatRupees(referral?.earnings ?? 0)}</Text>
+          <Text style={styles.earnChipLabel}>earned</Text>
+        </View>
       </Card>
 
       <Card style={styles.referralCard}>
@@ -98,17 +102,32 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
+    backgroundColor: colors.ink,
+    borderColor: colors.ink,
+  },
+  earnChip: {
+    alignItems: 'flex-end',
+  },
+  earnChipText: {
+    color: colors.gradEnd,
+    fontFamily: fontFamily.bold,
+    fontSize: fontSize.bodyStrong,
+  },
+  earnChipLabel: {
+    color: colors.textMuted,
+    fontFamily: fontFamily.regular,
+    fontSize: 11,
   },
   userMeta: {
     flex: 1,
   },
   name: {
-    color: colors.navy,
+    color: colors.white,
     fontFamily: fontFamily.bold,
     fontSize: fontSize.bodyStrong,
   },
   email: {
-    color: colors.textMuted,
+    color: colors.mint,
     fontFamily: fontFamily.regular,
     fontSize: fontSize.caption,
   },

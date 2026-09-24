@@ -11,13 +11,14 @@ import {
 } from 'react-native';
 import { Redirect, router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useAuth } from '../src/auth/AuthContext';
 import { authApi } from '../src/api/endpoints';
-import { colors, fontFamily, fontSize, radius } from '../src/theme/tokens';
+import { colors, ctaGradient, fontFamily, fontSize, radius } from '../src/theme/tokens';
 
 /**
- * Auth screen — login or create an account (with optional referral code).
- * Ships prefilled with the seeded demo account for quick evaluation.
+ * Auth screen — dark ink surface (contrast moment) with teal→green gradient
+ * CTA. Ships prefilled with the seeded demo account for quick evaluation.
  */
 export default function LoginScreen() {
   const { signIn, token, loading } = useAuth();
@@ -58,12 +59,17 @@ export default function LoginScreen() {
       style={styles.flex}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
       <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
         <View style={styles.brandRow}>
-          <View style={styles.logo}>
+          <LinearGradient
+            colors={[...ctaGradient]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.logo}
+          >
             <Text style={styles.logoText}>F</Text>
-          </View>
+          </LinearGradient>
           <Text style={styles.brand}>Feedants</Text>
         </View>
         <Text style={styles.heading}>
@@ -115,10 +121,19 @@ export default function LoginScreen() {
           <Pressable
             onPress={() => void submit()}
             disabled={busy}
-            style={({ pressed }) => [styles.cta, busy && { opacity: 0.6 }, pressed && { opacity: 0.8 }]}
+            style={({ pressed }) => [styles.ctaWrap, busy && { opacity: 0.6 }, pressed && { opacity: 0.85 }]}
             accessibilityRole="button"
           >
-            <Text style={styles.ctaText}>{mode === 'login' ? 'Login' : 'Create account'}</Text>
+            <LinearGradient
+              colors={[...ctaGradient]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.cta}
+            >
+              <Text style={styles.ctaText}>
+                {mode === 'login' ? 'Login' : 'Create account'}
+              </Text>
+            </LinearGradient>
           </Pressable>
 
           <Pressable onPress={() => setMode(mode === 'login' ? 'register' : 'login')}>
@@ -135,7 +150,7 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  flex: { flex: 1, backgroundColor: colors.bg },
+  flex: { flex: 1, backgroundColor: colors.ink },
   container: {
     flexGrow: 1,
     justifyContent: 'center',
@@ -152,7 +167,6 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 12,
-    backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -162,17 +176,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   brand: {
-    color: colors.navy,
+    color: colors.white,
     fontFamily: fontFamily.bold,
     fontSize: 20,
   },
   heading: {
-    color: colors.navy,
+    color: colors.white,
     fontFamily: fontFamily.bold,
     fontSize: 24,
   },
   sub: {
-    color: colors.textBody,
+    color: colors.mint,
     fontFamily: fontFamily.regular,
     fontSize: fontSize.body,
     marginBottom: 16,
@@ -183,25 +197,32 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: colors.surface,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: 'transparent',
     borderRadius: radius.button,
     paddingHorizontal: 14,
     paddingVertical: 12,
-    color: colors.navy,
+    color: colors.ink,
     fontFamily: fontFamily.regular,
     fontSize: fontSize.body,
   },
   error: {
-    color: colors.danger,
+    color: '#FF8A8A',
     fontFamily: fontFamily.medium,
     fontSize: fontSize.caption,
   },
+  ctaWrap: {
+    borderRadius: radius.button,
+    shadowColor: colors.gradStart,
+    shadowOpacity: 0.45,
+    shadowRadius: 14,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 6,
+    marginTop: 4,
+  },
   cta: {
-    backgroundColor: colors.primary,
     borderRadius: radius.button,
     alignItems: 'center',
     paddingVertical: 14,
-    marginTop: 4,
   },
   ctaText: {
     color: colors.white,
@@ -209,7 +230,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize.bodyStrong,
   },
   switchText: {
-    color: colors.accent,
+    color: colors.gradEnd,
     fontFamily: fontFamily.medium,
     fontSize: fontSize.caption,
     textAlign: 'center',
