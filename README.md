@@ -200,5 +200,4 @@ Envelope: `{ success, data | error: { code, message } }`. Errors: 400 validation
 > demo user, open *Feedants Classical Dance* — the Registered badge, live countdown, spot
 > progress, tabs, referral copy and the Upload Submission flow are all demonstrable; registering
 > a second fresh account shows the Register → pay → spots-decrement flow live.
-#   F e e d a n t s - - - C o m p e t i t i o n - D e t a i l s - M o d u l e  
- 
+#
