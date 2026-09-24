@@ -16,6 +16,10 @@ export const listQuerySchema = z
   .object({
     page: z.coerce.number().int().min(1).default(1),
     limit: z.coerce.number().int().min(1).max(50).default(20),
+    /** Free-text search across title, category and tags. */
+    q: z.string().trim().min(1).max(60).optional(),
+    /** Exact category filter (case-insensitive via controller). */
+    category: z.string().trim().min(1).max(40).optional(),
   })
   .strict();
 

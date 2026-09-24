@@ -10,10 +10,27 @@ import { buildView } from '../services/competitionState';
 import { findCompetition } from '../services/competitionService';
 import { cancelRegistration, registerForCompetition } from '../services/registrationService';
 
-/** GET /api/v1/competitions — paginated list with computed state per item. */
+/** GET /api/v1/competitions — paginated list with computed state per item.
+ *  Optional `q` (text search over title/category/tags) and `category` filters. */
 export const listCompetitions = asyncHandler(async (req: Request, res: Response) => {
-  const { page, limit } = req.query as unknown as { page: number; limit: number };
-  const filter = { status: { $ne: 'draft' } };
+  const { page, limit, q, category } = req.query as unknown as {
+    page: number;
+    limit: number;
+    q?: string;
+    category?: string;
+  };
+
+  const filter: Record<string, unknown> = { status: { $ne: 'draft' } };
+  if (q) {
+    // Escape user input so it is treated literally, never as regex syntax
+    const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const rx = new RegExp(escaped, 'i');
+    filter.$or = [{ title: rx }, { category: rx }, { tags: rx }];
+  }
+  if (category) {
+    filter.category = new RegExp(`^${category.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i');
+  }
+
   const [items, total] = await Promise.all([
     Competition.find(filter)
       .sort({ 'schedule.registrationCloseAt': 1 })

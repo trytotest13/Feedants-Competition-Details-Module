@@ -32,7 +32,14 @@ export const authApi = {
 };
 
 export const competitionApi = {
-  list: () => api<{ items: CompetitionSummary[]; total: number }>('/competitions?limit=50'),
+  list: (q?: string, category?: string) => {
+    const params = new URLSearchParams({ limit: '50' });
+    if (q && q.trim()) params.set('q', q.trim());
+    if (category && category !== 'All') params.set('category', category);
+    return api<{ items: CompetitionSummary[]; total: number }>(
+      `/competitions?${params.toString()}`,
+    );
+  },
   detail: (idOrSlug: string) => api<DetailData>(`/competitions/${idOrSlug}`),
   register: (idOrSlug: string) =>
     api<{ registration: Registration; view: CompetitionDetail['view'] }>(

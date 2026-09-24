@@ -397,6 +397,43 @@ describe('submissions', () => {
   });
 });
 
+describe('competition search (?q= / ?category=)', () => {
+  it('finds competitions by title, category and tag substrings', async () => {
+    await createCompetition({ slug: 'search-dance-a', title: 'Neon Dance Battle' });
+    await createCompetition({ slug: 'search-quiz-a', title: 'Brain Sprint', category: 'Quiz', tags: ['Rapid'] });
+
+    const byTitle = await request(app)
+      .get(`/api/v1/competitions?q=${encodeURIComponent('dance battle')}`);
+    expect(byTitle.status).toBe(200);
+    expect(byTitle.body.data.items.some((c: { title: string }) => c.title === 'Neon Dance Battle')).toBe(true);
+
+    const byCategory = await request(app).get('/api/v1/competitions?q=quiz');
+    expect(byCategory.body.data.items.some((c: { title: string }) => c.title === 'Brain Sprint')).toBe(true);
+
+    const byTag = await request(app).get('/api/v1/competitions?q=rapid');
+    expect(byTag.body.data.items.some((c: { title: string }) => c.title === 'Brain Sprint')).toBe(true);
+  });
+
+  it('filters by exact category and returns empty list without matches', async () => {
+    await createCompetition({ slug: 'search-cat-a', title: 'A Comp', category: 'Painting' });
+    await createCompetition({ slug: 'search-cat-b', title: 'B Comp', category: 'Chess' });
+
+    const paintings = await request(app).get('/api/v1/competitions?category=painting');
+    expect(paintings.body.data.items.map((c: { title: string }) => c.title)).toEqual(['A Comp']);
+
+    const none = await request(app).get(`/api/v1/competitions?q=${encodeURIComponent('zzz-no-match')}`);
+    expect(none.status).toBe(200);
+    expect(none.body.data.items).toHaveLength(0);
+  });
+
+  it('treats regex metacharacters literally instead of erroring', async () => {
+    await createCompetition({ slug: 'search-regex', title: 'Star Comp (2026)' });
+    const res = await request(app).get(`/api/v1/competitions?q=${encodeURIComponent('(2026')}`);
+    expect(res.status).toBe(200);
+    expect(res.body.data.items.map((c: { title: string }) => c.title)).toContain('Star Comp (2026)');
+  });
+});
+
 describe('lifecycle states', () => {
   it('reports upcoming before registration opens', async () => {
     const now = Date.now();

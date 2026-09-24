@@ -9,6 +9,10 @@ Legend: `[ ]` Todo · `[/]` In Progress · `[x]` Done — updated automatically 
 - (none)
 
 ## Done
+- [x] P5.1 Explore screen: server-side search (`?q=`, `?category=`) with debounced UI + category chips
+- [x] P5.2 Search tests (title/category/tag matching, escaping) — 21/21 green
+- [x] P5.3 Contrast design system (ink surfaces, gradient CTAs, tangerine signal)
+- [x] P5.4 Expanded seed: six competitions across all lifecycle states
 - [x] P1.1 Dedicated git repo initialized
 - [x] P1.2 Comprehensive `.gitignore` written
 - [x] P1.3 `.env.example` files (root + backend + mobile), names only

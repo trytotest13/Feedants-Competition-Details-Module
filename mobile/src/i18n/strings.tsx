@@ -67,6 +67,10 @@ export const strings = {
     tryAgain: 'Try again',
     couldntLoad: "Couldn't load. Check your connection.",
     emptyExplore: 'Nothing to explore yet — check back soon.',
+    searchPlaceholder: 'Search competitions…',
+    noResults: 'No matches found',
+    noResultsHint: 'Try a different keyword or category.',
+    exploreTitle: 'Explore',
   },
   hi: {
     goBack: 'वापस जाएँ',
@@ -131,6 +135,10 @@ export const strings = {
     tryAgain: 'पुनः प्रयास करें',
     couldntLoad: 'लोड नहीं हो सका। अपना कनेक्शन जाँचें।',
     emptyExplore: 'अभी कुछ एक्सप्लोर करने को नहीं — जल्द आएँ।',
+    searchPlaceholder: 'प्रतियोगिताएँ खोजें…',
+    noResults: 'कोई मेल नहीं मिला',
+    noResultsHint: 'कोई दूसरा कीवर्ड या श्रेणी आज़माएँ।',
+    exploreTitle: 'एक्सप्लोर',
   },
 } as const;
 

@@ -33,7 +33,7 @@ REST, versioned under `/api/v1`, JSON envelope `{ success, data | error }`. Serv
 | POST | `/auth/register` | — | Create account (optional `referralCode`), returns JWT |
 | POST | `/auth/login` | — | Email+password (rate-limited), returns JWT |
 | GET | `/auth/me` | ✅ | Current profile + referral summary |
-| GET | `/competitions` | optional | Paginated list with computed `state` |
+| GET | `/competitions` | optional | Paginated list with computed `state`; supports `?q=` text search (title/category/tags, regex-escaped) and `?category=` filter — powers the Explore screen |
 | GET | `/competitions/:idOrSlug` | optional | **Aggregated detail**: competition + `view` (state, flags, countdown, spots) + winners + testimonials |
 | POST | `/competitions/:id/register` | ✅ | Book spot (atomic) + entry-fee payment |
 | DELETE | `/competitions/:id/registration` | ✅ | Cancel (frees spot, window-checked) |

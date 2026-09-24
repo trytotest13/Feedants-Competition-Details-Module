@@ -7,7 +7,7 @@ import { useLocale, StringKey } from '../i18n/strings';
 export function useCompetitions() {
   return useQuery({
     queryKey: ['competitions'],
-    queryFn: competitionApi.list,
+    queryFn: () => competitionApi.list(),
   });
 }
 
