@@ -1,0 +1,158 @@
+import React, { createContext, useContext, useMemo, useState } from 'react';
+
+export type Locale = 'en' | 'hi';
+
+/** UI label dictionaries (competition content stays server-side, single language). */
+export const strings = {
+  en: {
+    goBack: 'Go back',
+    registered: 'Registered',
+    winnersGetCertificate: 'Winners get certificate',
+    prizePool: 'Prize Pool',
+    entryFee: 'Entry Fee',
+    spotsLeft: 'spots left',
+    booked: 'Booked',
+    judge: 'Judge',
+    yearsExperience: 'Years of Experience',
+    introVideo: 'Intro Video',
+    registrationClosesIn: 'Registration closes in',
+    submissionOpensIn: 'Submissions open in',
+    submissionClosesIn: 'Submissions close in',
+    resultsIn: 'Results in',
+    hurryUp: 'Hurry up!',
+    importantDates: 'Important Dates',
+    registerBefore: 'Register Before',
+    submissionStarts: 'Submission Starts',
+    submissionEnds: 'Submission Ends',
+    resultDate: 'Result Date',
+    previousWinners: 'Previous Winners',
+    noWinnersYet: 'No winners announced yet',
+    tabAbout: 'About Competition',
+    tabJudging: 'Judging Parameters',
+    tabRules: 'Rules & Eligibility',
+    viewMore: 'View more',
+    viewLess: 'View less',
+    rewards: 'Rewards',
+    allPositions: '(All Positions)',
+    disclaimer: 'Disclaimer:',
+    howReceivePrize: 'How will you receive prize money?',
+    watchVideo: 'Watch video to know more',
+    refundPolicy: 'Refund policy',
+    securePayments: 'Secure payments powered by',
+    referEarn: 'Refer & Earn more discount',
+    copyLink: 'Copy Link',
+    referNow: 'Refer Now',
+    youEarn: 'You earn',
+    forEverySignup: 'for every signup',
+    hearFromUsers: 'Hear From Our Users',
+    seeWhatParticipants: 'See what participants say about Feedants',
+    noTestimonials: 'No participant stories yet',
+    adHere: 'Ad Here',
+    uploadSubmission: 'Upload Submission',
+    submitEntry: 'Submit Entry',
+    submitted: 'Submitted',
+    registerNow: 'Register Now',
+    allSpotsFilled: 'All spots filled',
+    registrationOpensSoon: 'Registration opens soon',
+    judgingInProgress: 'Judging in progress',
+    viewResults: 'View Results',
+    cancelRegistration: 'Cancel registration',
+    home: 'Home',
+    explore: 'Explore',
+    competitions: 'Competitions',
+    profile: 'Profile',
+    login: 'Login',
+    logout: 'Log out',
+    loading: 'Loading…',
+    tryAgain: 'Try again',
+    couldntLoad: "Couldn't load. Check your connection.",
+    emptyExplore: 'Nothing to explore yet — check back soon.',
+  },
+  hi: {
+    goBack: 'वापस जाएँ',
+    registered: 'पंजीकृत',
+    winnersGetCertificate: 'विजेताओं को प्रमाणपत्र',
+    prizePool: 'पुरस्कार राशि',
+    entryFee: 'प्रवेश शुल्क',
+    spotsLeft: 'सीटें बची हैं',
+    booked: 'बुक',
+    judge: 'जज',
+    yearsExperience: 'वर्षों का अनुभव',
+    introVideo: 'परिचय वीडियो',
+    registrationClosesIn: 'पंजीकरण बंद होने में',
+    submissionOpensIn: 'प्रस्तुतियाँ शुरू होने में',
+    submissionClosesIn: 'प्रस्तुतियाँ बंद होने में',
+    resultsIn: 'परिणाम में',
+    hurryUp: 'जल्दी करें!',
+    importantDates: 'महत्वपूर्ण तिथियाँ',
+    registerBefore: 'पंजीकरण की अंतिम तिथि',
+    submissionStarts: 'प्रस्तुति शुरू',
+    submissionEnds: 'प्रस्तुति अंतिम',
+    resultDate: 'परिणाम तिथि',
+    previousWinners: 'पिछले विजेता',
+    noWinnersYet: 'अभी कोई विजेता घोषित नहीं',
+    tabAbout: 'प्रतियोगिता के बारे में',
+    tabJudging: 'निर्णय मापदंड',
+    tabRules: 'नियम और पात्रता',
+    viewMore: 'और देखें',
+    viewLess: 'कम देखें',
+    rewards: 'पुरस्कार',
+    allPositions: '(सभी पद)',
+    disclaimer: 'अस्वीकरण:',
+    howReceivePrize: 'आप पुरस्कार राशि कैसे प्राप्त करेंगे?',
+    watchVideo: 'जानने के लिए वीडियो देखें',
+    refundPolicy: 'धनवापसी नीति',
+    securePayments: 'सुरक्षित भुगतान —',
+    referEarn: 'रेफर करें और छूट पाएँ',
+    copyLink: 'लिंक कॉपी करें',
+    referNow: 'अभी रेफर करें',
+    youEarn: 'आप कमाते हैं',
+    forEverySignup: 'प्रत्येक साइनअप पर',
+    hearFromUsers: 'उपयोगकर्ताओं की राय',
+    seeWhatParticipants: 'देखें प्रतिभागी Feedants के बारे में क्या कहते हैं',
+    noTestimonials: 'अभी कोई कहानी नहीं',
+    adHere: 'विज्ञापन यहाँ',
+    uploadSubmission: 'प्रस्तुति अपलोड करें',
+    submitEntry: 'प्रविष्टि भेजें',
+    submitted: 'भेजा गया',
+    registerNow: 'अभी पंजीकरण करें',
+    allSpotsFilled: 'सभी सीटें भर गईं',
+    registrationOpensSoon: 'पंजीकरण जल्द खुलेगा',
+    judgingInProgress: 'मूल्यांकन जारी है',
+    viewResults: 'परिणाम देखें',
+    cancelRegistration: 'पंजीकरण रद्द करें',
+    home: 'होम',
+    explore: 'एक्सप्लोर',
+    competitions: 'प्रतियोगिताएँ',
+    profile: 'प्रोफ़ाइल',
+    login: 'लॉगिन',
+    logout: 'लॉग आउट',
+    loading: 'लोड हो रहा है…',
+    tryAgain: 'पुनः प्रयास करें',
+    couldntLoad: 'लोड नहीं हो सका। अपना कनेक्शन जाँचें।',
+    emptyExplore: 'अभी कुछ एक्सप्लोर करने को नहीं — जल्द आएँ।',
+  },
+} as const;
+
+export type StringKey = keyof (typeof strings)['en'];
+export type Strings = Record<StringKey, string>;
+
+interface LocaleState {
+  locale: Locale;
+  t: Strings;
+  setLocale: (l: Locale) => void;
+}
+
+const LocaleContext = createContext<LocaleState | null>(null);
+
+export function LocaleProvider({ children }: { children: React.ReactNode }) {
+  const [locale, setLocale] = useState<Locale>('en');
+  const value = useMemo(() => ({ locale, setLocale, t: strings[locale] }), [locale]);
+  return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>;
+}
+
+export function useLocale(): LocaleState {
+  const ctx = useContext(LocaleContext);
+  if (!ctx) throw new Error('useLocale must be used inside <LocaleProvider>');
+  return ctx;
+}

@@ -1,0 +1,54 @@
+import { api, apiUpload } from './client';
+import {
+  Competition,
+  CompetitionDetail,
+  Registration,
+  ReferralInfo,
+  Submission as SubmissionT,
+  Testimonial,
+  User,
+} from './types';
+
+export interface CompetitionSummary extends Competition {
+  view: CompetitionDetail['view'];
+}
+
+export interface DetailData {
+  competition: Competition;
+  view: CompetitionDetail['view'];
+  winners: CompetitionDetail['winners'];
+  testimonials: Testimonial[];
+}
+
+export const authApi = {
+  register: (body: { name: string; email: string; password: string; referralCode?: string }) =>
+    api<{ user: User; token: string }>('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
+  login: (body: { email: string; password: string }) =>
+    api<{ user: User; token: string }>('/auth/login', { method: 'POST', body: JSON.stringify(body) }),
+  me: () => api<{ user: User; referral: ReferralInfo }>('/auth/me'),
+};
+
+export const competitionApi = {
+  list: () => api<{ items: CompetitionSummary[]; total: number }>('/competitions?limit=50'),
+  detail: (idOrSlug: string) => api<DetailData>(`/competitions/${idOrSlug}`),
+  register: (idOrSlug: string) =>
+    api<{ registration: Registration; view: CompetitionDetail['view'] }>(
+      `/competitions/${idOrSlug}/register`,
+      { method: 'POST', body: JSON.stringify({}) },
+    ),
+  cancelRegistration: (idOrSlug: string) =>
+    api<{ view: CompetitionDetail['view'] }>(`/competitions/${idOrSlug}/registration`, {
+      method: 'DELETE',
+    }),
+  mySubmission: (idOrSlug: string) =>
+    api<{ submission: SubmissionT | null }>(`/competitions/${idOrSlug}/submission`),
+  uploadSubmission: (idOrSlug: string, form: FormData) =>
+    apiUpload<{ submission: SubmissionT }>(`/competitions/${idOrSlug}/submission`, form),
+};
+
+export const referralApi = {
+  me: () => api<{ referral: ReferralInfo }>('/referrals/me'),
+};
