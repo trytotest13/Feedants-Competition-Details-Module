@@ -50,7 +50,7 @@ export default function ExploreScreen() {
         <Text style={styles.title}>{t.exploreTitle}</Text>
 
         <View style={styles.searchWrap}>
-          <Ionicons name="search" size={17} color={colors.textMuted} />
+          <Ionicons name="search" size={18} color={colors.textMuted} />
           <TextInput
             style={styles.searchInput}
             placeholder={t.searchPlaceholder}
@@ -66,9 +66,10 @@ export default function ExploreScreen() {
               onPress={() => setText('')}
               accessibilityRole="button"
               accessibilityLabel="Clear search"
-              hitSlop={8}
+              hitSlop={10}
+              style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
             >
-              <Ionicons name="close-circle" size={17} color={colors.textMuted} />
+              <Ionicons name="close-circle" size={18} color={colors.textMuted} />
             </Pressable>
           ) : null}
         </View>

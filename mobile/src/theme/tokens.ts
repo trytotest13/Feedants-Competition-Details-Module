@@ -12,7 +12,8 @@ export const colors = {
   mintBorder: '#D3EAE5',
   navy: '#1C3D5A',
   textBody: '#5B7183',
-  textMuted: '#8FA3B0',
+  // 4.66:1 on white (was #8FA3B0 ≈ 2.6:1) — ui-ux-pro-max contrast rule
+  textMuted: '#64748B',
   border: '#E9EEF2',
   surface: '#FFFFFF',
   bg: '#F7FAFB',
@@ -27,7 +28,9 @@ export const colors = {
   inkSoft: '#16324A', // raised dark surface
   gradStart: '#0E9384', // gradient CTA start (teal)
   gradEnd: '#2FBF8F', // gradient CTA end (fresh green)
-  tangerine: '#FF7A29', // hot urgency accent (hurry up, spots left)
+  tangerine: '#FF7A29', // hot urgency accent — icons/graphics only (3:1 non-text)
+  // Darker tangerine for small text: 4.9:1 on white (ui-ux-pro-max 4.5:1 text rule)
+  tangerineText: '#C2410C',
   tangerineTint: '#FFF1E6', // tangerine wash for badges
   emeraldTint: '#E2F8EC', // submission-open badge wash
   slateTint: '#EEF2F5', // completed/judging badge wash
@@ -36,6 +39,14 @@ export const colors = {
   onDark: '#FFFFFF', // primary text on ink
   onDarkSoft: '#CFE3DE', // secondary text on ink (mint-tinted)
   onDarkDanger: '#FF8A8A', // error text on ink
+} as const;
+
+/** Icon size scale — consistent rhythm (ui-ux-pro-max icon sizing rule). */
+export const iconSize = {
+  sm: 14,
+  md: 18,
+  lg: 22,
+  xl: 24,
 } as const;
 
 /** Gradient pair for primary CTAs — use with expo-linear-gradient. */

@@ -17,7 +17,7 @@ export function DetailsHeader() {
         style={({ pressed }) => [styles.back, { opacity: pressed ? 0.6 : 1 }]}
         accessibilityRole="button"
         accessibilityLabel="Go back"
-        hitSlop={8}
+        hitSlop={10}
       >
         <Ionicons name="arrow-back" size={22} color={colors.navy} />
         <Text style={styles.backText}>{t.goBack}</Text>
@@ -30,7 +30,12 @@ export function DetailsHeader() {
             onPress={() => setLocale(l)}
             accessibilityRole="button"
             accessibilityLabel={l === 'en' ? 'English' : 'हिंदी'}
-            style={[styles.langPill, locale === l ? styles.langActive : styles.langInactive]}
+            hitSlop={6}
+            style={({ pressed }) => [
+              styles.langPill,
+              locale === l ? styles.langActive : styles.langInactive,
+              { opacity: pressed ? 0.6 : 1 },
+            ]}
           >
             <Text style={[styles.langText, locale === l ? styles.langTextActive : styles.langTextInactive]}>
               {l === 'en' ? 'ENG' : 'हिंदी'}

@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     paddingBottom: 14,
   },
   viewMoreText: {
-    color: colors.accent,
+    color: colors.primary,
     fontFamily: fontFamily.medium,
     fontSize: fontSize.chip,
   },

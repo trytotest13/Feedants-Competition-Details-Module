@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     gap: 3,
   },
   tabLabel: {
-    color: colors.silver,
+    color: colors.textMuted,
     fontFamily: fontFamily.medium,
     fontSize: 10,
   },

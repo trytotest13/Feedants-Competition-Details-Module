@@ -34,6 +34,14 @@ Reference: [`assignment/Objective_Page.png`](./assignment/Objective_Page.png). L
 
 **On-dark convention** (modeled on Expo's DESIGN.md in the awesome-design skill library): text on `ink` surfaces uses semantic `onDark` / `onDarkSoft` / `onDarkDanger` tokens — never raw `white`/`mint` — so dark surfaces can shift without touching components.
 
+**App-polish rules** (from the ui-ux-pro-max skill — react-native stack + mobile pro-rules):
+- Text contrast ≥ 4.5:1: `textMuted` #64748B (was #8FA3B0, 2.6:1); teal text on light surfaces uses `primary` (4.9:1) with `accent` reserved for icons/graphics (3:1 non-text); urgency text uses `tangerineText` #C2410C while `tangerine` stays graphics-only.
+- Touch targets ≥ 44pt: small icon controls use `hitSlop` (back 10, search-clear 10, language pills 6).
+- Pressed feedback within 80–150ms on every touchable, via opacity — never layout-shifting.
+- Icon size scale tokens (`iconSize.sm/md/lg/xl`) instead of arbitrary values; one icon family (@expo/vector-icons Ionicons); filled only for semantic moments (trophy/medal/play).
+- Disabled CTAs are non-interactive views with reduced emphasis (no dead-looking tappable).
+- Safe areas respected (top SafeAreaView, tab-bar bottom insets, scroll content insets).
+
 **Skills consulted for this design/docs framework:** frontend-design (distinctive direction, restraint, two-pass critique) · karpathy-coding-guidelines (smallest correct change, verify everything) · awesome-design library (real-world token conventions — Expo on-dark naming, semantic color structure) · gstack execution loop (orient → understand → plan → execute → verify → inspect diff → report; evidence hierarchy; never fabricate results) · skill-development + lightswind-ui (evaluated; Lightswind is a React+Tailwind web library and intentionally **not** used in this React Native/Expo project).
 
 ## 2. Typography scale (Poppins)

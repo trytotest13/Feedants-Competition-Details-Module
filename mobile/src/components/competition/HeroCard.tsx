@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
   },
   registeredText: {
-    color: colors.accent,
+    color: colors.primary,
     fontFamily: fontFamily.medium,
     fontSize: fontSize.chip,
   },
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
   },
   certificateText: {
-    color: colors.accent,
+    color: colors.primary,
     fontFamily: fontFamily.medium,
     fontSize: fontSize.chip,
   },
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   spotsText: {
-    color: colors.tangerine,
+    color: colors.tangerineText,
     fontFamily: fontFamily.bold,
     fontSize: fontSize.chip,
   },

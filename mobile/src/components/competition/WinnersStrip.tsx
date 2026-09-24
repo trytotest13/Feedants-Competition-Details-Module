@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize.caption,
   },
   position: {
-    color: colors.accent,
+    color: colors.primary,
     fontFamily: fontFamily.medium,
     fontSize: 11,
   },

@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize.caption,
   },
   strong: {
-    color: colors.accent,
+    color: colors.primary,
     fontFamily: fontFamily.semibold,
   },
 });

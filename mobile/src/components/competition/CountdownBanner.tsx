@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     flexShrink: 0,
   },
   hurry: {
-    color: colors.tangerine,
+    color: colors.tangerineText,
     fontFamily: fontFamily.bold,
     fontSize: 11,
   },
