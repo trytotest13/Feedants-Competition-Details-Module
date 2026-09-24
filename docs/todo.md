@@ -3,10 +3,10 @@
 Legend: `[ ]` Todo · `[/]` In Progress · `[x]` Done — updated automatically after every task.
 
 ## Todo
-- [ ] P4.3 README with run instructions, env, assumptions, trade-offs
+- (none — all phases complete)
 
 ## In Progress
-- [/] P4.1 Backend verification suite
+- (none)
 
 ## Done
 - [x] P1.1 Dedicated git repo initialized
@@ -20,15 +20,16 @@ Legend: `[ ]` Todo · `[/]` In Progress · `[x]` Done — updated automatically 
 - [x] P2.4 Competitions list + aggregated detail + lifecycle engine
 - [x] P2.5 Atomic registration/cancel + payment modes
 - [x] P2.6 Submissions (multipart, guards, replace)
-- [x] P2.7 Seed script matching reference design
+- [x] P2.7 Seed script matching reference design + dev auto-seed on boot
 - [x] P3.1 API client + auth context + queries
 - [x] P3.2 Tokens + UI primitives
 - [x] P3.3 Details screen sections (reference order)
 - [x] P3.4 Lifecycle-driven CTAs and states
 - [x] P3.5 Live server-anchored countdown
 - [x] P3.6 Tab bar, Home list, Profile, Login
-- [x] P3.7 ENG/हिंदी toggle
-- [x] P4.1 Vitest integration suite (incl. concurrency race test)
-- [x] P4.2 Typecheck + web export + visual pass vs reference
+- [x] P3.7 ENG/हिंदी toggle (verified live)
+- [x] P4.1 Vitest integration suite — 18/18 green (incl. concurrency race test)
+- [x] P4.2 Typecheck + web export + visual pass vs reference (parity confirmed)
+- [x] P4.3 README with run instructions, env, assumptions, trade-offs
 - [x] P4.4 SECURITY.md checklist mapping
-- [x] P4.5 Final commit, no secrets tracked
+- [x] P4.5 Final commit — secret scan clean, no env/uploads/dist tracked
