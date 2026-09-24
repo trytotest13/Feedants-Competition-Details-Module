@@ -1,4 +1,4 @@
-# Feedants — Competition Details Module (Full-Stack)
+# Feedants - Competition Details Module (Full-Stack)
 
 Submission for the **Feedants Full Stack Development Internship Technical Assignment**: the
 Competition Details screen built as a **functional full-stack feature** — React Native frontend,
